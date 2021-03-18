@@ -21,12 +21,21 @@ const People = () => {
     console.log(userList)
     if (loading) return <p>loading...</p>
 
-    const handleClick = (person) => {
+    const handleAdd = (person) => {
         setUserList(prevUserList => [...prevUserList,
         {
             name: person.name,
             email: person.email
         }])
+    }
+
+    const handleRemove = (person) => {
+        setUserList(prevUserList => {
+            const newUserList = prevUserList.filter(item => {
+                return item.name !== person.name
+            })
+            return newUserList
+        })
     }
 
     return (
@@ -36,7 +45,8 @@ const People = () => {
                     return (<li>
                         <p>{person.name}</p>
                         <p>{person.email}</p>
-                        <button onClick={() => handleClick(person)}>add to list</button>
+                        <button onClick={() => handleAdd(person)}>add to list</button>
+                        <button onClick={() => handleRemove(person)}>remove from list</button>
                     </li>)
                 })}
             </ul>
