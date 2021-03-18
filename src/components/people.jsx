@@ -5,6 +5,7 @@ const People = () => {
     const [list, setList] = useState("none")
     const [userList, setUserList] = useState([])
     const [loading, setLoading] = useState(true)
+    const [, reRender] = useState()
 
     useEffect(() => {
         getData()
@@ -18,7 +19,26 @@ const People = () => {
                 setLoading(false)
             })
     }
-    console.log(userList)
+
+    const handleSort = (direction) => {
+        console.log("in handleSort")
+        console.log(userList)
+        if (direction === "asc") {
+            setUserList(userList.sort(function (a, b) {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+            })
+            )
+        } else if (direction === "desc") {
+            setUserList(userList.sort(function (a, b) {
+                if (a.name > b.name) return -1;
+                if (a.name < b.name) return 1;
+            })
+            )
+        }
+        reRender({})
+    }
+
     if (loading) return <p>loading...</p>
 
     const handleAdd = (person) => {
@@ -50,7 +70,7 @@ const People = () => {
                     </li>)
                 })}
             </ul>
-            <MyList theirList={userList} />
+            <MyList theirList={userList} handleSort={handleSort} />
         </div>
     )
 }

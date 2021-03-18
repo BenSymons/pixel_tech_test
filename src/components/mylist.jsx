@@ -2,10 +2,11 @@ import React, { useState } from "react"
 
 const MyList = (props) => {
 
-    const [list, setList] = useState("none")
-
     return (
         <div>
+            <h2>Your list:</h2>
+            <button onClick={() => props.handleSort("asc")}>Sort A-Z</button>
+            <button onClick={() => props.handleSort("desc")}>Sort Z-A</button>
             <ul>
                 {props.theirList.map(person => {
                     return (
