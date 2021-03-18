@@ -58,6 +58,16 @@ const People = () => {
         })
     }
 
+    const isDisabled = (person) => {
+        for (let i = 0; i < userList.length; i++) {
+            const values = Object.values(userList[i])
+            if (values.includes(person.name)) {
+                return true
+            }
+        }
+        return false
+    }
+
     return (
         <div>
             <ul>
@@ -65,7 +75,7 @@ const People = () => {
                     return (<li>
                         <p>{person.name}</p>
                         <p>{person.email}</p>
-                        <button onClick={() => handleAdd(person)}>add to list</button>
+                        <button disabled={isDisabled(person)} onClick={() => handleAdd(person)}>add to list</button>
                         <button onClick={() => handleRemove(person)}>remove from list</button>
                     </li>)
                 })}
