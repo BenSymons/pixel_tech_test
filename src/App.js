@@ -1,13 +1,13 @@
 import './App.css';
+import People from "./components/people"
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+          <h1>The Listmaker 9000 v1</h1>
       </header>
+      <People/>
     </div>
   );
 }
