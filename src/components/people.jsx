@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react"
+import MyList from "./mylist"
 
 const People = () => {
     const [list, setList] = useState("none")
+    const [userList, setUserList] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -16,9 +18,17 @@ const People = () => {
                 setLoading(false)
             })
     }
-    console.log(loading)
-    console.log(list)
+    console.log(userList)
     if (loading) return <p>loading...</p>
+
+    const handleClick = (person) => {
+        setUserList(prevUserList => [...prevUserList,
+        {
+            name: person.name,
+            email: person.email
+        }])
+    }
+
     return (
         <div>
             <ul>
@@ -26,9 +36,11 @@ const People = () => {
                     return (<li>
                         <p>{person.name}</p>
                         <p>{person.email}</p>
+                        <button onClick={() => handleClick(person)}>add to list</button>
                     </li>)
                 })}
             </ul>
+            <MyList theirList={userList} />
         </div>
     )
 }
