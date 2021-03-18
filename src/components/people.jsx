@@ -7,15 +7,10 @@ const People = () => {
         getData()
     }, [])
 
-    const getData = async () => {
-        const response = await fetch("https://8ee41f94-d4f4-439d-8233-e573edca74ff.mock.pstmn.io/users")
-        const reader = response.body.getReader()
-
-        while (true) {
-            const { value, done } = await reader.read();
-            if (done) break;
-            setList(value)
-        }
+    const getData = () => {
+        fetch("https://8ee41f94-d4f4-439d-8233-e573edca74ff.mock.pstmn.io/users")
+            .then(res => res.json())
+            .then(data => setList(data))
     }
     console.dir(list)
     return (
