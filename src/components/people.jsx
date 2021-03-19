@@ -11,6 +11,7 @@ const People = () => {
         getData()
     }, [])
 
+
     const getData = () => {
         fetch("https://8ee41f94-d4f4-439d-8233-e573edca74ff.mock.pstmn.io/users")
             .then(res => res.json())
@@ -20,26 +21,33 @@ const People = () => {
             })
     }
 
+    if (loading) return <p>loading...</p>
+
     const handleSort = (direction) => {
-        console.log("in handleSort")
-        console.log(userList)
         if (direction === "asc") {
             setUserList(userList.sort(function (a, b) {
                 if (a.name < b.name) return -1;
                 if (a.name > b.name) return 1;
+                return 0;
             })
             )
         } else if (direction === "desc") {
             setUserList(userList.sort(function (a, b) {
                 if (a.name > b.name) return -1;
                 if (a.name < b.name) return 1;
+                return 0;
             })
             )
         }
         reRender({})
     }
 
-    if (loading) return <p>loading...</p>
+    const isEmpty = () => {
+        if (userList.length > 0) {
+            return "hidden"
+        }
+    }
+
 
     const handleAdd = (person) => {
         setUserList(prevUserList => [...prevUserList,
@@ -69,18 +77,20 @@ const People = () => {
     }
 
     return (
-        <div>
-            <ul>
-                {list.data.map(person => {
-                    return (<li>
-                        <p>{person.name}</p>
-                        <p>{person.email}</p>
-                        <button disabled={isDisabled(person)} onClick={() => handleAdd(person)}>add to list</button>
-                        <button onClick={() => handleRemove(person)}>remove from list</button>
-                    </li>)
-                })}
-            </ul>
-            <MyList theirList={userList} handleSort={handleSort} />
+        <div className="listContainer">
+            <div className="panel">
+                <ul className="no-bullets">
+                    {list.data.map(person => {
+                        return (<li key={person.name}>
+                            <p>Name: {person.name}</p>
+                            <p>email: {person.email}</p>
+                            <button disabled={isDisabled(person)} onClick={() => handleAdd(person)}>add to list</button>
+                            <button onClick={() => handleRemove(person)}>remove from list</button>
+                        </li>)
+                    })}
+                </ul>
+            </div>
+            <MyList theirList={userList} handleSort={handleSort} isEmpty={isEmpty} />
         </div>
     )
 }
